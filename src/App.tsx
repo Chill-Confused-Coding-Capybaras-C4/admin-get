@@ -8,14 +8,9 @@ import { TablePage } from './pages/Table';
 
 function App() {
   return (
-    <BrowserRouter >
-          <Routes>
-            <Route path='/' element={<Home />} />
-            <Route path='/form' element={<FormPage />} />
-            <Route path='/table' element={<TablePage />} />
+    
+          <TablePage />
 
-          </Routes>
-    </BrowserRouter>
   );
 }
 

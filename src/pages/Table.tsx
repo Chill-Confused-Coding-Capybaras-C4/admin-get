@@ -1,6 +1,42 @@
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 import Table from 'react-bootstrap/Table';
 
 export const TablePage = () => {
+
+  const [users, setUsers] = useState<usersData[]>([]);
+
+
+
+    type usersData = {
+        firstName: string;
+        lastName: string;
+        tcsid: string;
+        email: string;
+        createdTS: string;
+    }
+
+  useEffect(() => {
+
+    const fetchData = async () => {
+      const result = await axios.get("https://c4-back.azurewebsites.net/form", {
+        headers: { 'key': 'c4forever!' }
+      });
+      console.log(result.data)
+      
+      setUsers(result.data);
+      
+    }
+
+
+
+console.log(users);
+
+    fetchData();
+
+  }, []);
+
+
   return (
     <Table striped bordered hover>
       <thead>
@@ -13,21 +49,16 @@ export const TablePage = () => {
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>1</td>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-          <td>@fat</td>
-        </tr>
-       
+      {users?.map((value, index) => {
+                        return <tr key={index}>
+                            <td >{index}</td>
+                            <td >{value.firstName}</td>
+                            <td >{value.lastName}</td>
+                            <td >{value.email}</td>
+                            <td >{value.createdTS}</td>
+                        </tr>
+
+                    })}
       </tbody>
     </Table>
   );
